@@ -4,7 +4,12 @@ namespace DijkstraLib
 {
     public class Point
     {
-        int X { get; set; }
-        int Y { get; set; }
+        public Point(int X, int Y)
+        {
+            this.X = X;
+            this.Y = Y;
+        }
+        public int X { get; set; }
+        public int Y { get; set; }
     }
 }

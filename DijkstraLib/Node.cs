@@ -12,6 +12,26 @@ namespace DijkstraLib
         public LinkedList<KeyValuePair<Node, int>> ConnectedNodes;
         public Point Position;
 
+        public Node()
+        {
+            ConnectedNodes = new LinkedList<KeyValuePair<Node, int>>();
+        }
+        public Node(string NodeName)
+        {
+            this.NodeName = NodeName;
+            ConnectedNodes = new LinkedList<KeyValuePair<Node, int>>();
+        }
+        public Node(string NodeName, Point Position)
+        {
+            this.NodeName = NodeName;
+            this.Position = Position;
+            ConnectedNodes = new LinkedList<KeyValuePair<Node, int>>();
+        }
+        public Node(Point Position)
+        {
+            this.Position = Position;
+            ConnectedNodes = new LinkedList<KeyValuePair<Node, int>>();
+        }
         public int CompareTo(object obj)
         {
             if (obj is Node n)

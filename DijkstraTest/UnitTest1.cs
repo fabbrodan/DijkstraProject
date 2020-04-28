@@ -87,5 +87,15 @@ namespace DijkstraTest
             // Assert
             Assert.AreEqual(7, targetNode.CurrentCost);
         }
+
+        [Test]
+        public void TestRandomNodeMapGeneration()
+        {
+            NodeMap nodeMap = new NodeMap();
+
+            nodeMap.GenerateRandomNodes(10);
+
+            Assert.IsNotNull(nodeMap.Nodes);
+        }
     }
 }
