@@ -129,7 +129,7 @@ namespace DijkstraLib
                 {
                     foreach (Point pt in OccupiedPositions)
                     {
-                        while ((!DistanceThreshold(500, x, pt.X)) && (!DistanceThreshold(500, y, pt.Y)))
+                        while ((!DistanceThreshold(50, x, pt.X)) && (!DistanceThreshold(50, y, pt.Y)))
                         {
                             x = random.Next(15, Width - 30);
                             y = random.Next(15, Height - 30);
