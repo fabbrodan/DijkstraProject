@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using DijkstraLib;
 
@@ -14,25 +11,137 @@ namespace DijkstraApp
     public partial class Form1 : Form
     {
         private NodeMap NodeMap = new NodeMap();
+        private Color[] colors = { Color.Red, Color.Blue, Color.Green, Color.Cyan, Color.Yellow, Color.BlueViolet };
+        private List<KeyValuePair<string, GraphicsPath>> gpList = new List<KeyValuePair<string, GraphicsPath>>();
+        private Node startNode;
+        private Node endNode;
         public Form1()
         {
             InitializeComponent();
-            NodeMap.GenerateRandomNodes(10, 10, panel1.Height, panel1.Width);
+            nodeCount_tb.Text = "3";
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        private void panel1_mouseMove(object sender, MouseEventArgs e)
         {
-            Graphics g = e.Graphics;
-            foreach (Node node in NodeMap.Nodes)
+            foreach (KeyValuePair<string, GraphicsPath> kvp in gpList)
             {
-                g.DrawEllipse(new Pen(Color.Blue), new RectangleF(node.Position.X, node.Position.Y, 20, 20));
-                g.DrawString(node.NodeName, new Font("Arial", 12), new SolidBrush(Color.Red), node.Position.X, node.Position.Y);
-                foreach (KeyValuePair<Node, int> connectedNode in node.ConnectedNodes)
+                if (kvp.Value.IsVisible(new System.Drawing.Point(e.X, e.Y)))
                 {
-                    g.DrawLine(new Pen(Color.Black, 1), node.Position.X + 10, node.Position.Y + 10, connectedNode.Key.Position.X + 10, connectedNode.Key.Position.Y + 10);
-                    //g.DrawString(connectedNode.Value.ToString(), new Font("Arial", 12), new SolidBrush(Color.Red), new PointF((node.Position.X + connectedNode.Key.Position.X) / 2, (node.Position.Y + connectedNode.Key.Position.Y) / 2));
+                    StringBuilder sb = new StringBuilder("Node " + kvp.Key + "\nConnected Nodes:\n");
+
+                    foreach (KeyValuePair<Node, int> connectedNode in NodeMap.Nodes.Find(n => n.NodeName == kvp.Key).ConnectedNodes)
+                    {
+                        sb.Append(connectedNode.Key.NodeName + " - Weight: " + connectedNode.Value + "\n");
+                    }
+
+                    nodeToolTip.Show(sb.ToString(), panel1, e.X + 10, e.Y + 10, 2500);
                 }
             }
+        }
+
+        private void panel_click(object sender, EventArgs e)
+        {
+            MouseEventArgs me = (MouseEventArgs)e;
+            System.Drawing.Point click = new System.Drawing.Point(me.X, me.Y);
+            foreach (KeyValuePair<string, GraphicsPath> kvp in gpList)
+            {
+                if (kvp.Value.IsVisible(click))
+                {
+                    if (startNode == null)
+                    {
+                        startNode = NodeMap.Nodes.Find(n => n.NodeName == kvp.Key);
+                        comboBox1.SelectedItem = kvp.Key;
+                    }
+                    else if (endNode == null)
+                    {
+                        endNode = NodeMap.Nodes.Find(n => n.NodeName == kvp.Key);
+                        comboBox2.SelectedItem = kvp.Key;
+                    }
+                    break;
+                }
+            }
+        }
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+            if (NodeMap.Nodes.Count > 0)
+            {
+                Graphics g = e.Graphics;
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                int ellipseSize = 30;
+                int lineOffset = (int)(ellipseSize /2);
+                int textOffset = (int)(ellipseSize * 0.1);
+                foreach (Node node in NodeMap.Nodes)
+                {
+                    int colorRandom = 0;
+                    foreach (KeyValuePair<Node, int> connectedNode in node.ConnectedNodes)
+                    {
+                        g.DrawLine(new Pen(colors[colorRandom], 2),
+                            node.Position.X + lineOffset,
+                            node.Position.Y + lineOffset,
+                            connectedNode.Key.Position.X + lineOffset,
+                            connectedNode.Key.Position.Y + lineOffset);
+                        if (colorRandom == 5)
+                        {
+                            colorRandom = 0;
+                        }
+                        else
+                        {
+                            colorRandom++;
+                        }
+                    }
+                }
+
+                foreach (Node node in NodeMap.Nodes)
+                {
+                    g.FillEllipse(new SolidBrush(Color.Black), new RectangleF(node.Position.X, node.Position.Y, ellipseSize, ellipseSize));
+                    GraphicsPath gp = new GraphicsPath();
+                    gp.AddEllipse(new RectangleF(node.Position.X, node.Position.Y, ellipseSize, ellipseSize));
+                    KeyValuePair<string, GraphicsPath> kp = new KeyValuePair<string, GraphicsPath>(node.NodeName, gp);
+                    gpList.Add(kp);
+                    g.DrawString(node.NodeName, new Font("Arial", 12, FontStyle.Bold), new SolidBrush(Color.Red), node.Position.X + textOffset, node.Position.Y + textOffset);
+                }
+            }
+        }
+
+        private void generateNodeMap_btn_Click(object sender, EventArgs e)
+        {
+            int noOfNodes = Int32.Parse(nodeCount_tb.Text);
+            if (noOfNodes < 3)
+            {
+                MessageBox.Show("You need to enter at least three!");
+                return;
+            }
+            if (noOfNodes > 26)
+            {
+                MessageBox.Show("You cannot enter more than 26!");
+                return;
+            }
+            NodeMap.Nodes.Clear();
+            NodeMap.GenerateRandomNodes(noOfNodes, 10, panel1.Height, panel1.Width);
+
+            foreach (Node node in NodeMap.Nodes)
+            {
+                comboBox1.Items.Add(node.NodeName);
+                comboBox2.Items.Add(node.NodeName);
+            }
+
+            panel1.Invalidate();
+        }
+
+        private void dijkstra_Btn_Click(object sender, EventArgs e)
+        {
+            startNode = NodeMap.Nodes.Find(n => n.NodeName == (string)comboBox1.SelectedItem);
+            endNode = NodeMap.Nodes.Find(n => n.NodeName == (string)comboBox2.SelectedItem);
+
+            foreach (Node node in NodeMap.Nodes)
+            {
+                if (!node.Equals(startNode))
+                {
+                    node.CurrentCost = Int32.MaxValue;
+                }
+            }
+            Dijkstra.DijkstraSearch(NodeMap, startNode, endNode);
+            distance_label.Text = "Distance from node " + startNode.NodeName + " to " + endNode.NodeName + " is " + endNode.CurrentCost;
         }
     }
 }

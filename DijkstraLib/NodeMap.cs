@@ -23,20 +23,30 @@ namespace DijkstraLib
                 Nodes.Add(new Node(Letters[i], p));
             }
 
-            foreach (Node node in Nodes)
+            for (int i = 0; i < Nodes.Count; i++)
             {
-                for (int i = 0; i < Nodes.Count; i++)
+                int threshold = Nodes.Count > 3 ? 3 : 2;
+                Node node = Nodes[i];
+                List<int> usedIndices = new List<int>();
+                while (node.ConnectedNodes.Count < threshold)
                 {
-                    int decider = random.Next(0, 15);
-                    int NodeIndex = i + 1;
-                    if (decider % 2 == 0)
+                    int connectedNodeIndex = 0;
+                    if (i + 1 < Nodes.Count)
                     {
-                        if (NodeIndex >= Nodes.Count)
-                        {
-                            NodeIndex = i - 1;
-                        }
-                        node.ConnectedNodes.AddLast(new KeyValuePair<Node, int>(Nodes[NodeIndex], random.Next(1, 15)));
+                        connectedNodeIndex = random.Next(i + 1, Nodes.Count);
                     }
+                    else
+                    {
+                        connectedNodeIndex = random.Next(0, Nodes.Count);
+                    }
+                    while (usedIndices.Contains(connectedNodeIndex))
+                    {
+                        connectedNodeIndex = random.Next(0, Nodes.Count);
+                    }
+                    usedIndices.Add(connectedNodeIndex);
+                    int distance = random.Next(1, random.Next(1, 11));
+                    node.ConnectedNodes.AddLast(new KeyValuePair<Node, int>(Nodes[connectedNodeIndex], distance));
+                    Nodes[connectedNodeIndex].ConnectedNodes.AddLast(new KeyValuePair<Node, int>(node, distance));
                 }
             }
         }
@@ -51,20 +61,30 @@ namespace DijkstraLib
                 Nodes.Add(new Node(Letters[i], p));
             }
 
-            foreach (Node node in Nodes)
+            for (int i = 0; i < Nodes.Count; i++)
             {
-                for (int i = 0; i < Nodes.Count; i++)
+                int threshold = Nodes.Count > 3 ? 3 : 2;
+                Node node = Nodes[i];
+                List<int> usedIndices = new List<int>();
+                while (node.ConnectedNodes.Count < threshold)
                 {
-                    int decider = random.Next(0, 15);
-                    int NodeIndex = i + 1;
-                    if (decider % 2 == 0)
+                    int connectedNodeIndex = 0;
+                    if (i + 1 < Nodes.Count)
                     {
-                        if (NodeIndex >= Nodes.Count)
-                        {
-                            NodeIndex = i - 1;
-                        }
-                        node.ConnectedNodes.AddLast(new KeyValuePair<Node, int>(Nodes[NodeIndex], random.Next(1, MaxDistance)));
+                        connectedNodeIndex = random.Next(i + 1, Nodes.Count);
                     }
+                    else
+                    {
+                        connectedNodeIndex = random.Next(0, Nodes.Count);
+                    }
+                    while (usedIndices.Contains(connectedNodeIndex))
+                    {
+                        connectedNodeIndex = random.Next(0, Nodes.Count);
+                    }
+                    usedIndices.Add(connectedNodeIndex);
+                    int distance = random.Next(1, MaxDistance + 1);
+                    node.ConnectedNodes.AddLast(new KeyValuePair<Node, int>(Nodes[connectedNodeIndex], distance));
+                    Nodes[connectedNodeIndex].ConnectedNodes.AddLast(new KeyValuePair<Node, int>(node, distance));
                 }
             }
         }
@@ -98,8 +118,8 @@ namespace DijkstraLib
             for (int i = 0; i < NumberOfNodes; i++)
             {
                 Point p = null;
-                int x = random.Next(15, 150);
-                int y = random.Next(15, 150);
+                int x = random.Next(15, Width - 30);
+                int y = random.Next(15, Height - 30);
                 
                 if (i == 0)
                 {
@@ -111,8 +131,8 @@ namespace DijkstraLib
                     {
                         while ((!DistanceThreshold(50, x, pt.X)) && (!DistanceThreshold(50, y, pt.Y)))
                         {
-                            x = random.Next(15, Width - 15);
-                            y = random.Next(15, Height - 15);
+                            x = random.Next(15, Width - 30);
+                            y = random.Next(15, Height - 30);
                         }
                         p = new Point(x, y);
                     }
@@ -122,20 +142,30 @@ namespace DijkstraLib
                 OccupiedPositions.Add(p);
             }
 
-            foreach (Node node in Nodes)
+            for (int i = 0; i < Nodes.Count; i++)
             {
-                for (int i = 0; i < Nodes.Count; i++)
+                int threshold = Nodes.Count > 3 ? 3 : 2;
+                Node node = Nodes[i];
+                List<int> usedIndices = new List<int>();
+                while (node.ConnectedNodes.Count < threshold)
                 {
-                    int decider = random.Next(0, 15);
-                    int NodeIndex = i + 1;
-                    if (decider % 2 == 0)
+                    int connectedNodeIndex = 0;
+                    if (i + 1 < Nodes.Count)
                     {
-                        if (NodeIndex >= Nodes.Count)
-                        {
-                            NodeIndex = i - 1;
-                        }
-                        node.ConnectedNodes.AddLast(new KeyValuePair<Node, int>(Nodes[NodeIndex], random.Next(1, MaxDistance)));
+                        connectedNodeIndex = random.Next(i + 1, Nodes.Count);
                     }
+                    else
+                    {
+                        connectedNodeIndex = random.Next(0, Nodes.Count);
+                    }
+                    while (usedIndices.Contains(connectedNodeIndex))
+                    {
+                        connectedNodeIndex = random.Next(0, Nodes.Count);
+                    }
+                    usedIndices.Add(connectedNodeIndex);
+                    int distance = random.Next(1, MaxDistance + 1);
+                    node.ConnectedNodes.AddLast(new KeyValuePair<Node, int>(Nodes[connectedNodeIndex], distance));
+                    Nodes[connectedNodeIndex].ConnectedNodes.AddLast(new KeyValuePair<Node, int>(node, distance));
                 }
             }
         }
