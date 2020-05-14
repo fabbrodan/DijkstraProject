@@ -4,32 +4,37 @@ using System.Text;
 
 namespace DijkstraLib
 {
+    // Node class
     public class Node : IComparable
     {
         public int CurrentCost { get; set; }
         public bool Visited { get; set; } = false;
         public string NodeName;
         public LinkedList<KeyValuePair<Node, int>> ConnectedNodes;
-        public Point Position;
+        public Point Pos;
 
+        // base constructor
         public Node()
         {
             ConnectedNodes = new LinkedList<KeyValuePair<Node, int>>();
         }
-        public Node(string NodeName)
+        // constructor with node name
+        public Node(string nodeName)
         {
-            this.NodeName = NodeName;
+            this.NodeName = nodeName;
             ConnectedNodes = new LinkedList<KeyValuePair<Node, int>>();
         }
-        public Node(string NodeName, Point Position)
+        // constructor with node name and node position
+        public Node(string nodeName, Point pos)
         {
-            this.NodeName = NodeName;
-            this.Position = Position;
+            this.NodeName = nodeName;
+            this.Pos = pos;
             ConnectedNodes = new LinkedList<KeyValuePair<Node, int>>();
         }
-        public Node(Point Position)
+        // constructor with node position
+        public Node(Point pos)
         {
-            this.Position = Position;
+            this.Pos = pos;
             ConnectedNodes = new LinkedList<KeyValuePair<Node, int>>();
         }
         public int CompareTo(object obj)

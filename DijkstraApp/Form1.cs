@@ -76,10 +76,10 @@ namespace DijkstraApp
                     foreach (KeyValuePair<Node, int> connectedNode in node.ConnectedNodes)
                     {
                         g.DrawLine(new Pen(colors[colorRandom], 2),
-                            node.Position.X + lineOffset,
-                            node.Position.Y + lineOffset,
-                            connectedNode.Key.Position.X + lineOffset,
-                            connectedNode.Key.Position.Y + lineOffset);
+                            node.Pos.X + lineOffset,
+                            node.Pos.Y + lineOffset,
+                            connectedNode.Key.Pos.X + lineOffset,
+                            connectedNode.Key.Pos.Y + lineOffset);
                         if (colorRandom == 5)
                         {
                             colorRandom = 0;
@@ -93,12 +93,12 @@ namespace DijkstraApp
 
                 foreach (Node node in NodeMap.Nodes)
                 {
-                    g.FillEllipse(new SolidBrush(Color.Black), new RectangleF(node.Position.X, node.Position.Y, ellipseSize, ellipseSize));
+                    g.FillEllipse(new SolidBrush(Color.Black), new RectangleF(node.Pos.X, node.Pos.Y, ellipseSize, ellipseSize));
                     GraphicsPath gp = new GraphicsPath();
-                    gp.AddEllipse(new RectangleF(node.Position.X, node.Position.Y, ellipseSize, ellipseSize));
+                    gp.AddEllipse(new RectangleF(node.Pos.X, node.Pos.Y, ellipseSize, ellipseSize));
                     KeyValuePair<string, GraphicsPath> kp = new KeyValuePair<string, GraphicsPath>(node.NodeName, gp);
                     gpList.Add(kp);
-                    g.DrawString(node.NodeName, new Font("Arial", 12, FontStyle.Bold), new SolidBrush(Color.Red), node.Position.X + textOffset, node.Position.Y + textOffset);
+                    g.DrawString(node.NodeName, new Font("Arial", 12, FontStyle.Bold), new SolidBrush(Color.Red), node.Pos.X + textOffset, node.Pos.Y + textOffset);
                 }
             }
         }

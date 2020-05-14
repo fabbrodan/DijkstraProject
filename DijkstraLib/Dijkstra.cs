@@ -5,33 +5,42 @@ using System.Linq;
 
 namespace DijkstraLib
 {
+    // Static dijkstra class
+    // algorithm for finding shortest path between nodes
     public static class Dijkstra
     {
         public static void DijkstraSearch(NodeMap nodeMap, Node startNode, Node targetNode)
         {
+            // if start node is same as target node
             if (startNode.Equals(targetNode))
             {
                 return;
             }
 
-            foreach (KeyValuePair<Node, int> connectedNode in startNode.ConnectedNodes.Where(n => n.Key.Visited == false))
+            // loop through all connected nodes who hasn't been visited
+            foreach (KeyValuePair<Node, int> connectedNode in startNode.ConnectedNodes.Where(
+                n => n.Key.Visited == false))
             {
+                // if
                 if (startNode.CurrentCost + connectedNode.Value < connectedNode.Key.CurrentCost)
                 {
                     connectedNode.Key.CurrentCost = startNode.CurrentCost + connectedNode.Value;
                 }
 
-                nodeMap.Nodes[nodeMap.Nodes.IndexOf(nodeMap.Nodes.Find(n => n.NodeName == connectedNode.Key.NodeName))] =
-                    connectedNode.Key;
+                int index = nodeMap.Nodes.IndexOf(nodeMap.Nodes.Find(n => n.NodeName == connectedNode.Key.NodeName));
+                nodeMap.Nodes[index] = connectedNode.Key;
             }
+
             startNode.Visited = true;
 
             Node nextNode;
 
-            int largestCheckedNodeValue = nodeMap.Nodes.Where(n => n.Visited == false).Where(n => n.CurrentCost < Int32.MaxValue).Max().CurrentCost;
+            int largestCheckedNodeValue = nodeMap.Nodes.Where(n => n.Visited == false)
+                .Where(n => n.CurrentCost < Int32.MaxValue).Max().CurrentCost;
             if (nodeMap.Nodes.Where(n => n.Visited == false && n.CurrentCost <= largestCheckedNodeValue).Count() > 0)
             {
-                int min = nodeMap.Nodes.Where(n => n.Visited == false && n.CurrentCost <= largestCheckedNodeValue).Min().CurrentCost;
+                int min = nodeMap.Nodes.Where(n => n.Visited == false && n.CurrentCost <= largestCheckedNodeValue).Min()
+                    .CurrentCost;
                 nextNode = nodeMap.Nodes.Where(n => n.Visited == false && n.CurrentCost == min).First();
             }
             else
