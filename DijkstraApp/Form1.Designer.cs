@@ -40,6 +40,8 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.dijkstra_Btn = new System.Windows.Forms.Button();
             this.distance_label = new System.Windows.Forms.Label();
+            this.nodeWeight_lbl = new System.Windows.Forms.Label();
+            this.maxNodeWeight_tb = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // panel1
@@ -66,7 +68,7 @@
             // 
             // nodeCount_tb
             // 
-            this.nodeCount_tb.Location = new System.Drawing.Point(12, 460);
+            this.nodeCount_tb.Location = new System.Drawing.Point(12, 386);
             this.nodeCount_tb.Name = "nodeCount_tb";
             this.nodeCount_tb.Size = new System.Drawing.Size(132, 20);
             this.nodeCount_tb.TabIndex = 1;
@@ -74,7 +76,7 @@
             // nodeNumberLabel
             // 
             this.nodeNumberLabel.AutoSize = true;
-            this.nodeNumberLabel.Location = new System.Drawing.Point(12, 441);
+            this.nodeNumberLabel.Location = new System.Drawing.Point(12, 370);
             this.nodeNumberLabel.Name = "nodeNumberLabel";
             this.nodeNumberLabel.Size = new System.Drawing.Size(73, 13);
             this.nodeNumberLabel.TabIndex = 4;
@@ -132,11 +134,29 @@
             this.distance_label.Size = new System.Drawing.Size(0, 13);
             this.distance_label.TabIndex = 10;
             // 
+            // nodeWeight_lbl
+            // 
+            this.nodeWeight_lbl.AutoSize = true;
+            this.nodeWeight_lbl.Location = new System.Drawing.Point(12, 412);
+            this.nodeWeight_lbl.Name = "nodeWeight_lbl";
+            this.nodeWeight_lbl.Size = new System.Drawing.Size(96, 13);
+            this.nodeWeight_lbl.TabIndex = 11;
+            this.nodeWeight_lbl.Text = "Max Road Weight:";
+            // 
+            // maxNodeWeight_tb
+            // 
+            this.maxNodeWeight_tb.Location = new System.Drawing.Point(12, 430);
+            this.maxNodeWeight_tb.Name = "maxNodeWeight_tb";
+            this.maxNodeWeight_tb.Size = new System.Drawing.Size(132, 20);
+            this.maxNodeWeight_tb.TabIndex = 12;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 535);
+            this.Controls.Add(this.maxNodeWeight_tb);
+            this.Controls.Add(this.nodeWeight_lbl);
             this.Controls.Add(this.distance_label);
             this.Controls.Add(this.dijkstra_Btn);
             this.Controls.Add(this.comboBox2);
@@ -167,6 +187,8 @@
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Button dijkstra_Btn;
         private System.Windows.Forms.Label distance_label;
+        private System.Windows.Forms.Label nodeWeight_lbl;
+        private System.Windows.Forms.TextBox maxNodeWeight_tb;
     }
 }
 

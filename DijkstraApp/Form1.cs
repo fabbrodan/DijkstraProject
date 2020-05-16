@@ -106,6 +106,7 @@ namespace DijkstraApp
         private void generateNodeMap_btn_Click(object sender, EventArgs e)
         {
             int noOfNodes = Int32.Parse(nodeCount_tb.Text);
+            int nodeWeight = 0;
             if (noOfNodes < 3)
             {
                 MessageBox.Show("You need to enter at least three!");
@@ -116,8 +117,21 @@ namespace DijkstraApp
                 MessageBox.Show("You cannot enter more than 26!");
                 return;
             }
+            try
+            {
+                nodeWeight = Int32.Parse(maxNodeWeight_tb.Text);
+                if (nodeWeight < 5)
+                {
+                    MessageBox.Show("Minimum weight has to be 5");
+                    maxNodeWeight_tb.Text = "5";
+                }
+            }
+            catch (FormatException)
+            {
+                nodeWeight = 10;
+            }
             NodeMap.Nodes.Clear();
-            NodeMap.GenerateRandomNodes(noOfNodes, 10, panel1.Height, panel1.Width);
+            NodeMap.GenerateRandomNodes(noOfNodes, nodeWeight, panel1.Height, panel1.Width);
 
             foreach (Node node in NodeMap.Nodes)
             {
@@ -132,6 +146,8 @@ namespace DijkstraApp
         {
             startNode = NodeMap.Nodes.Find(n => n.NodeName == (string)comboBox1.SelectedItem);
             endNode = NodeMap.Nodes.Find(n => n.NodeName == (string)comboBox2.SelectedItem);
+
+            startNode.CurrentCost = 0;
 
             foreach (Node node in NodeMap.Nodes)
             {
