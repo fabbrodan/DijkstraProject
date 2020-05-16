@@ -25,7 +25,7 @@ namespace DijkstraApp
         {
             foreach (KeyValuePair<string, GraphicsPath> kvp in gpList)
             {
-                if (kvp.Value.IsVisible(new System.Drawing.Point(e.X, e.Y)))
+                if (kvp.Value.IsVisible(new Point(e.X, e.Y)))
                 {
                     StringBuilder sb = new StringBuilder("Node " + kvp.Key + "\nConnected Nodes:\n");
 
@@ -42,7 +42,7 @@ namespace DijkstraApp
         private void panel_click(object sender, EventArgs e)
         {
             MouseEventArgs me = (MouseEventArgs)e;
-            System.Drawing.Point click = new System.Drawing.Point(me.X, me.Y);
+            Point click = new Point(me.X, me.Y);
             foreach (KeyValuePair<string, GraphicsPath> kvp in gpList)
             {
                 if (kvp.Value.IsVisible(click))
