@@ -17,10 +17,9 @@ namespace DijkstraLib
         public void GenerateRandomNodes(int NumberOfNodes)
         {
             Random random = new Random();
-            Point p = new Point(random.Next(15, 150), random.Next(15, 150));
             for (int i = 0; i < NumberOfNodes; i++)
             {
-                Nodes.Add(new Node(Letters[i], p));
+                Nodes.Add(new Node(Letters[i]));
             }
 
             for (int i = 0; i < Nodes.Count; i++)

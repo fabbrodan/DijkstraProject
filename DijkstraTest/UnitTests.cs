@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DijkstraTest
 {
-    public class DijkstraTests
+    public class DijkstraUnitTests
     {
         private NodeMap nodeMap;
 
