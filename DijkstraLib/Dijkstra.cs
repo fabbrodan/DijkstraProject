@@ -9,6 +9,7 @@ namespace DijkstraLib
     // algorithm for finding shortest path between nodes
     public static class Dijkstra
     {
+        public static List<Node> NodePath = new List<Node>();
         public static void DijkstraSearch(NodeMap nodeMap, Node startNode, Node targetNode)
         {
             // if start node is same as target node
@@ -49,6 +50,7 @@ namespace DijkstraLib
             }
 
             DijkstraSearch(nodeMap, nextNode, targetNode);
+            
         }
     }
 }
