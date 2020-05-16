@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Drawing;
 
 namespace DijkstraLib
 {
@@ -144,7 +144,7 @@ namespace DijkstraLib
             List<Point> occupiedPositions = new List<Point>();
             for (int i = 0; i < numberOfNodes; i++)
             {
-                Point p = null;
+                Point p = new Point();
                 int x = random.Next(15, width - 30);
                 int y = random.Next(15, height - 30);
 
