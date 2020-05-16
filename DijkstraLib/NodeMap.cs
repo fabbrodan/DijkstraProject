@@ -54,11 +54,9 @@ namespace DijkstraLib
         public void GenerateRandomNodes(int NumberOfNodes, int MaxDistance)
         {
             Random random = new Random();
-            List<Point> OccupiedPOsitions = new List<Point>();
             for (int i = 0; i < NumberOfNodes; i++)
             {
-                Point p = new Point(random.Next(15, 150), random.Next(15, 150));
-                Nodes.Add(new Node(Letters[i], p));
+                Nodes.Add(new Node(Letters[i]));
             }
 
             for (int i = 0; i < Nodes.Count; i++)

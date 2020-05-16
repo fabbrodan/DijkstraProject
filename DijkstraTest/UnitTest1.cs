@@ -91,11 +91,46 @@ namespace DijkstraTest
         [Test]
         public void TestRandomNodeMapGeneration()
         {
+            // Arrange
             NodeMap nodeMap = new NodeMap();
 
+            // Assert
             nodeMap.GenerateRandomNodes(10);
 
+            // Act
             Assert.IsNotNull(nodeMap.Nodes);
+        }
+
+        [Test]
+        public void TestNodeMapCount()
+        {
+            // Arrange
+            NodeMap nodeMap = new NodeMap();
+
+            // Act
+            nodeMap.GenerateRandomNodes(10);
+
+            // Assert
+            Assert.IsTrue(nodeMap.Nodes.Count == 10);
+        }
+
+        [Test]
+        public void TestNodeMapDistanceGeneration()
+        {
+            // Arrange
+            NodeMap nodeMap = new NodeMap();
+
+            // Act
+            nodeMap.GenerateRandomNodes(10, 25);
+
+            // Assert
+            foreach (Node node in nodeMap.Nodes)
+            {
+                foreach (KeyValuePair<Node, int> edge in node.ConnectedNodes)
+                {
+                    Assert.IsFalse(edge.Value > 25);
+                }
+            }
         }
     }
 }
