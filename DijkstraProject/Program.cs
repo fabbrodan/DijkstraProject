@@ -48,9 +48,6 @@ namespace DijkstraProject
             Node startNode = map.Nodes[3];
             Node targetNode = map.Nodes[4];
             startNode.CurrentCost = 0;
-            
-            // d to node e is 6
-            // d to node b is 5
 
             foreach (Node node in map.Nodes.Where(n => n.NodeName != startNode.NodeName))
             {
@@ -60,11 +57,6 @@ namespace DijkstraProject
             Dijkstra.DijkstraSearch(map, startNode, targetNode);
 
             Console.WriteLine("The shortest distance from node " + startNode.NodeName + " to node " + targetNode.NodeName + " is " + targetNode.CurrentCost);
-            
-            Node newTargetNode = map.Nodes[2];
-            Dijkstra.DijkstraSearch(map, startNode, newTargetNode);
-
-            Console.WriteLine("The shortest distance from node " + startNode.NodeName + " to node " + newTargetNode.NodeName + " is " + newTargetNode.CurrentCost);
 
             Console.ReadLine();
         }

@@ -41,7 +41,7 @@ namespace DijkstraLib
             {
                 int min = nodeMap.Nodes.Where(n => n.Visited == false && n.CurrentCost <= largestCheckedNodeValue).Min()
                     .CurrentCost;
-                nextNode = nodeMap.Nodes.Where(n => n.Visited == false && n.CurrentCost == min).First();
+                nextNode = nodeMap.Nodes.First(n => n.Visited == false && n.CurrentCost == min);
             }
             else
             {
