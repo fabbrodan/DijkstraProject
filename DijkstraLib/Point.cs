@@ -2,6 +2,7 @@
 
 namespace DijkstraLib
 {
+    // Point class
     public class Point
     {
         public Point(int X, int Y)

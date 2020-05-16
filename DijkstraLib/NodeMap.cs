@@ -4,33 +4,50 @@ using System.Text;
 
 namespace DijkstraLib
 {
+    // Node map class, generates nodes according to prerequisites
     public class NodeMap
     {
         public List<Node> Nodes;
-        private string[] Letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+
+        private string[] Letters =
+        {
+            "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
+            "V", "W", "X", "Y", "Z"
+        };
 
         public NodeMap()
         {
             Nodes = new List<Node>();
         }
 
-        public void GenerateRandomNodes(int NumberOfNodes)
+        // Generate random nodes
+        // All nodes will have two or three connections
+        // distance/weight will be set to a random value between 1 and 10
+        public void GenerateRandomNodes(int numberOfNodes)
         {
             Random random = new Random();
+<<<<<<< HEAD
             for (int i = 0; i < NumberOfNodes; i++)
+=======
+            Point p = new Point(random.Next(15, 150), random.Next(15, 150));
+            for (int i = 0; i < numberOfNodes; i++)
+>>>>>>> b2abdddc52d0179bc5cfd81eb9c69c2a9a2874d5
             {
                 Nodes.Add(new Node(Letters[i]));
             }
 
+            // loop through all nodes
             for (int i = 0; i < Nodes.Count; i++)
             {
                 int threshold = Nodes.Count > 3 ? 3 : 2;
                 Node node = Nodes[i];
                 List<int> usedIndices = new List<int>();
+
+                // add new connections as long as connected nodes are fewer than threshold (2/3)
                 while (node.ConnectedNodes.Count < threshold)
                 {
                     int connectedNodeIndex = 0;
-                    if (i + 1 < Nodes.Count)
+                    if (Nodes.Count > i + 1)
                     {
                         connectedNodeIndex = random.Next(i + 1, Nodes.Count);
                     }
@@ -38,10 +55,13 @@ namespace DijkstraLib
                     {
                         connectedNodeIndex = random.Next(0, Nodes.Count);
                     }
+
+                    // if index is already used, create a new index
                     while (usedIndices.Contains(connectedNodeIndex))
                     {
                         connectedNodeIndex = random.Next(0, Nodes.Count);
                     }
+
                     usedIndices.Add(connectedNodeIndex);
                     int distance = random.Next(1, random.Next(1, 11));
                     node.ConnectedNodes.AddLast(new KeyValuePair<Node, int>(Nodes[connectedNodeIndex], distance));
@@ -50,19 +70,29 @@ namespace DijkstraLib
             }
         }
 
-        public void GenerateRandomNodes(int NumberOfNodes, int MaxDistance)
+        // overload generate random nodes
+        // distance/weight will be set to a random value between 1 and maxDistance
+        public void GenerateRandomNodes(int numberOfNodes, int maxDistance)
         {
             Random random = new Random();
+<<<<<<< HEAD
             for (int i = 0; i < NumberOfNodes; i++)
+=======
+            List<Point> occupiedPositions = new List<Point>();
+            for (int i = 0; i < numberOfNodes; i++)
+>>>>>>> b2abdddc52d0179bc5cfd81eb9c69c2a9a2874d5
             {
                 Nodes.Add(new Node(Letters[i]));
             }
 
+            // loop through all nodes
             for (int i = 0; i < Nodes.Count; i++)
             {
                 int threshold = Nodes.Count > 3 ? 3 : 2;
                 Node node = Nodes[i];
                 List<int> usedIndices = new List<int>();
+
+                // add new connections as long as connected nodes are fewer than threshold (2/3)
                 while (node.ConnectedNodes.Count < threshold)
                 {
                     int connectedNodeIndex = 0;
@@ -74,31 +104,35 @@ namespace DijkstraLib
                     {
                         connectedNodeIndex = random.Next(0, Nodes.Count);
                     }
+
+                    // if index is already used, create a new index
                     while (usedIndices.Contains(connectedNodeIndex))
                     {
                         connectedNodeIndex = random.Next(0, Nodes.Count);
                     }
+
                     usedIndices.Add(connectedNodeIndex);
-                    int distance = random.Next(1, MaxDistance + 1);
+                    int distance = random.Next(1, maxDistance + 1);
                     node.ConnectedNodes.AddLast(new KeyValuePair<Node, int>(Nodes[connectedNodeIndex], distance));
                     Nodes[connectedNodeIndex].ConnectedNodes.AddLast(new KeyValuePair<Node, int>(node, distance));
                 }
             }
         }
 
-        private bool DistanceThreshold(int Threshold, int Value1, int Value2)
+        
+        private bool DistanceThreshold(int threshold, int value1, int value2)
         {
-            int diff = Value1 - Value2;
-            int lowerThreshold = -Threshold;
+            int diff = value1 - value2;
+            int lowerThreshold = -threshold;
             if (Math.Sign(diff) == 1)
             {
-                if (diff > Threshold)
+                if (diff > threshold)
                 {
                     return true;
                 }
             }
 
-            if (Math.Sign(diff) == -1)
+            else if (Math.Sign(diff) == -1)
             {
                 if (diff < lowerThreshold)
                 {
@@ -108,42 +142,50 @@ namespace DijkstraLib
 
             return false;
         }
-        public void GenerateRandomNodes(int NumberOfNodes, int MaxDistance, int Height, int Width)
+
+        // overload generate random nodes
+        // distance/weight will be set to a random value between 1 and maxDistance
+        // calculate all node positions based on height and width
+        public void GenerateRandomNodes(int numberOfNodes, int maxDistance, int height, int width)
         {
             Random random = new Random();
-            List<Point> OccupiedPositions = new List<Point>();
-            for (int i = 0; i < NumberOfNodes; i++)
+            List<Point> occupiedPositions = new List<Point>();
+            for (int i = 0; i < numberOfNodes; i++)
             {
                 Point p = null;
-                int x = random.Next(15, Width - 30);
-                int y = random.Next(15, Height - 30);
-                
+                int x = random.Next(15, width - 30);
+                int y = random.Next(15, height - 30);
+
                 if (i == 0)
                 {
                     p = new Point(x, y);
                 }
                 else
                 {
-                    foreach (Point pt in OccupiedPositions)
+                    foreach (Point pt in occupiedPositions)
                     {
                         while ((!DistanceThreshold(50, x, pt.X)) && (!DistanceThreshold(50, y, pt.Y)))
                         {
-                            x = random.Next(15, Width - 30);
-                            y = random.Next(15, Height - 30);
+                            x = random.Next(15, width - 30);
+                            y = random.Next(15, height - 30);
                         }
+
                         p = new Point(x, y);
                     }
                 }
 
                 Nodes.Add(new Node(Letters[i], p));
-                OccupiedPositions.Add(p);
+                occupiedPositions.Add(p);
             }
 
+            // loop through all nodes
             for (int i = 0; i < Nodes.Count; i++)
             {
                 int threshold = Nodes.Count > 3 ? 3 : 2;
                 Node node = Nodes[i];
                 List<int> usedIndices = new List<int>();
+                
+                // add new connections as long as connected nodes are fewer than threshold (2/3)
                 while (node.ConnectedNodes.Count < threshold)
                 {
                     int connectedNodeIndex = 0;
@@ -155,12 +197,15 @@ namespace DijkstraLib
                     {
                         connectedNodeIndex = random.Next(0, Nodes.Count);
                     }
+
+                    // if index is already used, create a new index
                     while (usedIndices.Contains(connectedNodeIndex))
                     {
                         connectedNodeIndex = random.Next(0, Nodes.Count);
                     }
+
                     usedIndices.Add(connectedNodeIndex);
-                    int distance = random.Next(1, MaxDistance + 1);
+                    int distance = random.Next(1, maxDistance + 1);
                     node.ConnectedNodes.AddLast(new KeyValuePair<Node, int>(Nodes[connectedNodeIndex], distance));
                     Nodes[connectedNodeIndex].ConnectedNodes.AddLast(new KeyValuePair<Node, int>(node, distance));
                 }
