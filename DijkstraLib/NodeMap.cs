@@ -7,6 +7,9 @@ namespace DijkstraLib
     // Node map class, generates nodes according to prerequisites
     public class NodeMap
     {
+        /// <summary>
+        /// The Nodes available in the current NodeMap instance
+        /// </summary>
         public List<Node> Nodes;
 
         private string[] Letters =
@@ -23,11 +26,15 @@ namespace DijkstraLib
         // Generate random nodes
         // All nodes will have two or three connections
         // distance/weight will be set to a random value between 1 and 10
-        public void GenerateRandomNodes(int numberOfNodes)
+        /// <summary>
+        /// Generates a random NodeMap with <paramref name="NumberOfNodes"/> number of Nodes. Max Distance is set to 10
+        /// </summary>
+        /// <param name="NumberOfNodes">The amount of nodes the NodeMap will contain</param>
+        public void GenerateRandomNodes(int NumberOfNodes)
         {
             Random random = new Random();
             Point p = new Point(random.Next(15, 150), random.Next(15, 150));
-            for (int i = 0; i < numberOfNodes; i++)
+            for (int i = 0; i < NumberOfNodes; i++)
             {
                 Nodes.Add(new Node(Letters[i]));
             }
@@ -68,11 +75,16 @@ namespace DijkstraLib
 
         // overload generate random nodes
         // distance/weight will be set to a random value between 1 and maxDistance
-        public void GenerateRandomNodes(int numberOfNodes, int maxDistance)
+        /// <summary>
+        /// Generates a random NodeMap with <paramref name="NumberOfNodes"/> number of Nodes. Max Distance is set to <paramref name="MaxDistance"/>
+        /// </summary>
+        /// <param name="NumberOfNodes">The number of Nodes the NodeMap will contain</param>
+        /// <param name="MaxDistance">The maximum distance between the Nodes</param>
+        public void GenerateRandomNodes(int NumberOfNodes, int MaxDistance)
         {
             Random random = new Random();
             List<Point> occupiedPositions = new List<Point>();
-            for (int i = 0; i < numberOfNodes; i++)
+            for (int i = 0; i < NumberOfNodes; i++)
             {
                 Nodes.Add(new Node(Letters[i]));
             }
@@ -104,14 +116,20 @@ namespace DijkstraLib
                     }
 
                     usedIndices.Add(connectedNodeIndex);
-                    int distance = random.Next(1, maxDistance + 1);
+                    int distance = random.Next(1, MaxDistance + 1);
                     node.ConnectedNodes.AddLast(new KeyValuePair<Node, int>(Nodes[connectedNodeIndex], distance));
                     Nodes[connectedNodeIndex].ConnectedNodes.AddLast(new KeyValuePair<Node, int>(node, distance));
                 }
             }
         }
 
-        
+        /// <summary>
+        /// Calculates if the point distance on an axis is outside the scope of <paramref name="threshold"/>
+        /// </summary>
+        /// <param name="threshold">The threshold which cannot be overridden</param>
+        /// <param name="value1">Value 1 to compare</param>
+        /// <param name="value2">Value 2 to compare</param>
+        /// <returns></returns>
         private bool DistanceThreshold(int threshold, int value1, int value2)
         {
             int diff = value1 - value2;
@@ -138,15 +156,25 @@ namespace DijkstraLib
         // overload generate random nodes
         // distance/weight will be set to a random value between 1 and maxDistance
         // calculate all node positions based on height and width
-        public void GenerateRandomNodes(int numberOfNodes, int maxDistance, int height, int width)
+        /// <summary>
+        /// Generates a random NodeMap with <paramref name="NumberOfNodes"/> number of Nodes. Max Distance is set to <paramref name="MaxDistance"/>
+        /// </summary>
+        /// <remarks>
+        /// Used to generate Point references for each node in order to visually display them
+        /// </remarks>
+        /// <param name="NumberOfNodes">The numder of nodes the NodeMap will contain</param>
+        /// <param name="MaxDistance">The maximum distance between nodes</param>
+        /// <param name="Height">The height of the visual node</param>
+        /// <param name="Width">Thw width of the visual node</param>
+        public void GenerateRandomNodes(int NumberOfNodes, int MaxDistance, int Height, int Width)
         {
             Random random = new Random();
             List<Point> occupiedPositions = new List<Point>();
-            for (int i = 0; i < numberOfNodes; i++)
+            for (int i = 0; i < NumberOfNodes; i++)
             {
                 Point p = new Point();
-                int x = random.Next(15, width - 30);
-                int y = random.Next(15, height - 30);
+                int x = random.Next(15, Width - 30);
+                int y = random.Next(15, Height - 30);
 
                 if (i == 0)
                 {
@@ -158,8 +186,8 @@ namespace DijkstraLib
                     {
                         while ((!DistanceThreshold(50, x, pt.X)) && (!DistanceThreshold(50, y, pt.Y)))
                         {
-                            x = random.Next(15, width - 30);
-                            y = random.Next(15, height - 30);
+                            x = random.Next(15, Width - 30);
+                            y = random.Next(15, Height - 30);
                         }
 
                         p = new Point(x, y);
@@ -197,7 +225,7 @@ namespace DijkstraLib
                     }
 
                     usedIndices.Add(connectedNodeIndex);
-                    int distance = random.Next(1, maxDistance + 1);
+                    int distance = random.Next(1, MaxDistance + 1);
                     node.ConnectedNodes.AddLast(new KeyValuePair<Node, int>(Nodes[connectedNodeIndex], distance));
                     Nodes[connectedNodeIndex].ConnectedNodes.AddLast(new KeyValuePair<Node, int>(node, distance));
                 }
