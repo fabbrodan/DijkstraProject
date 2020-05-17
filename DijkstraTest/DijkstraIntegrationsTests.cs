@@ -45,8 +45,10 @@ namespace DijkstraTest
                 }
             }
 
+            Dijkstra dijkstra = new Dijkstra(nodeMap);
+
             // Act Dijkstra
-            Dijkstra.DijkstraSearch(nodeMap, startNode, endNode);
+            dijkstra.DijkstraSearch(startNode, endNode);
 
             // ASsert Dijkstra
             Assert.AreEqual(1, endNode.CurrentCost);
