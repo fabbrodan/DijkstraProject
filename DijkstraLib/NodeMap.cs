@@ -67,8 +67,8 @@ namespace DijkstraLib
 
                     usedIndices.Add(connectedNodeIndex);
                     int distance = random.Next(1, random.Next(1, 11));
-                    node.ConnectedNodes.AddLast(new KeyValuePair<Node, int>(Nodes[connectedNodeIndex], distance));
-                    Nodes[connectedNodeIndex].ConnectedNodes.AddLast(new KeyValuePair<Node, int>(node, distance));
+                    node.ConnectedNodes.Add(new KeyValuePair<Node, int>(Nodes[connectedNodeIndex], distance));
+                    Nodes[connectedNodeIndex].ConnectedNodes.Add(new KeyValuePair<Node, int>(node, distance));
                 }
             }
         }
@@ -117,8 +117,8 @@ namespace DijkstraLib
 
                     usedIndices.Add(connectedNodeIndex);
                     int distance = random.Next(1, MaxDistance + 1);
-                    node.ConnectedNodes.AddLast(new KeyValuePair<Node, int>(Nodes[connectedNodeIndex], distance));
-                    Nodes[connectedNodeIndex].ConnectedNodes.AddLast(new KeyValuePair<Node, int>(node, distance));
+                    node.ConnectedNodes.Add(new KeyValuePair<Node, int>(Nodes[connectedNodeIndex], distance));
+                    Nodes[connectedNodeIndex].ConnectedNodes.Add(new KeyValuePair<Node, int>(node, distance));
                 }
             }
         }
@@ -226,8 +226,8 @@ namespace DijkstraLib
 
                     usedIndices.Add(connectedNodeIndex);
                     int distance = random.Next(1, MaxDistance + 1);
-                    node.ConnectedNodes.AddLast(new KeyValuePair<Node, int>(Nodes[connectedNodeIndex], distance));
-                    Nodes[connectedNodeIndex].ConnectedNodes.AddLast(new KeyValuePair<Node, int>(node, distance));
+                    node.ConnectedNodes.Add(new KeyValuePair<Node, int>(Nodes[connectedNodeIndex], distance));
+                    Nodes[connectedNodeIndex].ConnectedNodes.Add(new KeyValuePair<Node, int>(node, distance));
                 }
             }
         }

@@ -42,6 +42,7 @@
             this.distance_label = new System.Windows.Forms.Label();
             this.nodeWeight_lbl = new System.Windows.Forms.Label();
             this.maxNodeWeight_tb = new System.Windows.Forms.TextBox();
+            this.pathLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // panel1
@@ -129,10 +130,11 @@
             // distance_label
             // 
             this.distance_label.AutoSize = true;
-            this.distance_label.Location = new System.Drawing.Point(539, 474);
+            this.distance_label.Location = new System.Drawing.Point(539, 437);
             this.distance_label.Name = "distance_label";
-            this.distance_label.Size = new System.Drawing.Size(0, 13);
+            this.distance_label.Size = new System.Drawing.Size(21, 13);
             this.distance_label.TabIndex = 10;
+            this.distance_label.Text = "bla";
             // 
             // nodeWeight_lbl
             // 
@@ -150,11 +152,21 @@
             this.maxNodeWeight_tb.Size = new System.Drawing.Size(132, 20);
             this.maxNodeWeight_tb.TabIndex = 12;
             // 
+            // pathLabel
+            // 
+            this.pathLabel.AutoSize = true;
+            this.pathLabel.Location = new System.Drawing.Point(536, 457);
+            this.pathLabel.Name = "pathLabel";
+            this.pathLabel.Size = new System.Drawing.Size(35, 13);
+            this.pathLabel.TabIndex = 13;
+            this.pathLabel.Text = "label1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 535);
+            this.Controls.Add(this.pathLabel);
             this.Controls.Add(this.maxNodeWeight_tb);
             this.Controls.Add(this.nodeWeight_lbl);
             this.Controls.Add(this.distance_label);
@@ -189,6 +201,7 @@
         private System.Windows.Forms.Label distance_label;
         private System.Windows.Forms.Label nodeWeight_lbl;
         private System.Windows.Forms.TextBox maxNodeWeight_tb;
+        private System.Windows.Forms.Label pathLabel;
     }
 }
 

@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using DijkstraLib;
+using System.Linq;
 
 namespace DijkstraApp
 {
@@ -147,6 +148,7 @@ namespace DijkstraApp
 
         private void dijkstra_Btn_Click(object sender, EventArgs e)
         {
+            pathLabel.Text = "";
             startNode = NodeMap.Nodes.Find(n => n.NodeName == (string)comboBox1.SelectedItem);
             endNode = NodeMap.Nodes.Find(n => n.NodeName == (string)comboBox2.SelectedItem);
 
@@ -160,7 +162,16 @@ namespace DijkstraApp
                 }
             }
             dijkstra.DijkstraSearch(startNode, endNode);
+            dijkstra.SetShortestPath();
+
             distance_label.Text = "Distance from node " + startNode.NodeName + " to " + endNode.NodeName + " is " + endNode.CurrentCost;
+            StringBuilder sb = new StringBuilder("The path traverses the following nodes: ");
+            for (int i = dijkstra.NodePath.Count - 1; i >= 0; i--)
+            {
+                sb.Append(dijkstra.NodePath[i].NodeName + ", ");
+            }
+            sb.Remove(sb.Length - 2, 2);
+            pathLabel.Text = sb.ToString();
         }
     }
 }
