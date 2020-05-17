@@ -9,6 +9,7 @@ namespace DijkstraTest
     public class DijkstraUnitTests
     {
         private NodeMap nodeMap;
+        private Dijkstra dijkstra;
 
         [SetUp]
         public void Setup()
@@ -66,6 +67,8 @@ namespace DijkstraTest
             // I
             nodeMap.Nodes[8].ConnectedNodes.AddLast(new KeyValuePair<Node, int>(nodeMap.Nodes.Find(n => n.NodeName == "e"), 7));
             nodeMap.Nodes[8].ConnectedNodes.AddLast(new KeyValuePair<Node, int>(nodeMap.Nodes.Find(n => n.NodeName == "h"), 1));
+
+            dijkstra = new Dijkstra(nodeMap);
         }
 
         [Test]
@@ -81,8 +84,9 @@ namespace DijkstraTest
                 node.CurrentCost = Int32.MaxValue;
             }
 
+
             // Act
-            Dijkstra.DijkstraSearch(nodeMap, startNode, targetNode);
+            dijkstra.DijkstraSearch(startNode, targetNode);
 
             // Assert
             Assert.AreEqual(7, targetNode.CurrentCost);

@@ -11,6 +11,7 @@ namespace DijkstraApp
     public partial class Form1 : Form
     {
         private NodeMap NodeMap = new NodeMap();
+        private Dijkstra dijkstra;
         private Color[] colors = { Color.Red, Color.Blue, Color.Green, Color.Cyan, Color.Yellow, Color.BlueViolet };
         private List<KeyValuePair<string, GraphicsPath>> gpList = new List<KeyValuePair<string, GraphicsPath>>();
         private Node startNode;
@@ -133,6 +134,8 @@ namespace DijkstraApp
             NodeMap.Nodes.Clear();
             NodeMap.GenerateRandomNodes(noOfNodes, nodeWeight, panel1.Height, panel1.Width);
 
+            dijkstra = new Dijkstra(NodeMap);
+
             foreach (Node node in NodeMap.Nodes)
             {
                 comboBox1.Items.Add(node.NodeName);
@@ -156,7 +159,7 @@ namespace DijkstraApp
                     node.CurrentCost = Int32.MaxValue;
                 }
             }
-            Dijkstra.DijkstraSearch(NodeMap, startNode, endNode);
+            dijkstra.DijkstraSearch(startNode, endNode);
             distance_label.Text = "Distance from node " + startNode.NodeName + " to " + endNode.NodeName + " is " + endNode.CurrentCost;
         }
     }

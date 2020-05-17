@@ -54,7 +54,9 @@ namespace DijkstraProject
                 node.CurrentCost = Int32.MaxValue;
             }
 
-            Dijkstra.DijkstraSearch(map, startNode, targetNode);
+            Dijkstra dijkstra = new Dijkstra(map);
+
+            dijkstra.DijkstraSearch(startNode, targetNode);
 
             Console.WriteLine("The shortest distance from node " + startNode.NodeName + " to node " + targetNode.NodeName + " is " + targetNode.CurrentCost);
 

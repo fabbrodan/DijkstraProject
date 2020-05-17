@@ -7,15 +7,25 @@ namespace DijkstraLib
 {
     // Static dijkstra class
     // algorithm for finding shortest path between nodes
-    public static class Dijkstra
+    public class Dijkstra
     {
+        private NodeMap nodeMap;
+        /// <summary>
+        /// Creates a new instance of the Dijkstra class
+        /// </summary>
+        /// <param name="NodeMap">The <see cref="NodeMap"/> that belongs to this instance</param>
+        public Dijkstra(NodeMap NodeMap)
+        {
+            nodeMap = NodeMap;
+        }
+
         /// <summary>
         /// Method to calculate the shortest path from <paramref name="StartNode"/> to <paramref name="TargetNode"/> in the specified <paramref name="NodeMap"/>
         /// </summary>
         /// <param name="NodeMap">The <see cref="NodeMap"/> to search in</param>
         /// <param name="StartNode">The <see cref="Node"/> to start at</param>
         /// <param name="TargetNode">The <see cref="Node"/> to travel to</param>
-        public static void DijkstraSearch(NodeMap NodeMap, Node StartNode, Node TargetNode)
+        public void DijkstraSearch(Node StartNode, Node TargetNode)
         {
             // if start node is same as target node
             if (StartNode.Equals(TargetNode))
@@ -32,29 +42,26 @@ namespace DijkstraLib
                 {
                     connectedNode.Key.CurrentCost = StartNode.CurrentCost + connectedNode.Value;
                 }
-
-                int index = NodeMap.Nodes.IndexOf(NodeMap.Nodes.Find(n => n.NodeName == connectedNode.Key.NodeName));
-                NodeMap.Nodes[index] = connectedNode.Key;
             }
 
             StartNode.Visited = true;
 
             Node nextNode;
 
-            int largestCheckedNodeValue = NodeMap.Nodes.Where(n => n.Visited == false)
+            int largestCheckedNodeValue = nodeMap.Nodes.Where(n => n.Visited == false)
                 .Where(n => n.CurrentCost < Int32.MaxValue).Max().CurrentCost;
-            if (NodeMap.Nodes.Where(n => n.Visited == false && n.CurrentCost <= largestCheckedNodeValue).Count() > 0)
+            if (nodeMap.Nodes.Where(n => n.Visited == false && n.CurrentCost <= largestCheckedNodeValue).Count() > 0)
             {
-                int min = NodeMap.Nodes.Where(n => n.Visited == false && n.CurrentCost <= largestCheckedNodeValue).Min()
+                int min = nodeMap.Nodes.Where(n => n.Visited == false && n.CurrentCost <= largestCheckedNodeValue).Min()
                     .CurrentCost;
-                nextNode = NodeMap.Nodes.First(n => n.Visited == false && n.CurrentCost == min);
+                nextNode = nodeMap.Nodes.First(n => n.Visited == false && n.CurrentCost == min);
             }
             else
             {
                 return;
             }
 
-            DijkstraSearch(NodeMap, nextNode, TargetNode);
+            DijkstraSearch(nextNode, TargetNode);
             
         }
     }
