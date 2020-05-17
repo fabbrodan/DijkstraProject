@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace DijkstraLib
 {
@@ -10,6 +11,9 @@ namespace DijkstraLib
     public class Dijkstra
     {
         private NodeMap nodeMap;
+        public List<Node> NodePath = new List<Node>();
+        private Node startNode;
+        private Node endNode;
         /// <summary>
         /// Creates a new instance of the Dijkstra class
         /// </summary>
@@ -27,6 +31,16 @@ namespace DijkstraLib
         /// <param name="TargetNode">The <see cref="Node"/> to travel to</param>
         public void DijkstraSearch(Node StartNode, Node TargetNode)
         {
+            if (startNode == null)
+            {
+                startNode = StartNode;
+            }
+
+            if (endNode == null)
+            {
+                endNode = TargetNode;
+            }
+
             // if start node is same as target node
             if (StartNode.Equals(TargetNode))
             {
@@ -62,7 +76,36 @@ namespace DijkstraLib
             }
 
             DijkstraSearch(nextNode, TargetNode);
-            
+        }
+
+        public void SetShortestPath()
+        {
+            NodePath.Add(endNode);
+
+            List<Node> allKeys = (from kvp in endNode.ConnectedNodes select kvp.Key).Distinct().ToList();
+
+            Node minNode = (from min in allKeys orderby min.CurrentCost ascending select min).First();
+
+            NodePath.Add(minNode);
+
+            SetShortestPath(minNode);
+        }
+
+        private void SetShortestPath(Node nextNode)
+        {
+            if (nextNode.CurrentCost == 0)
+            {
+                return;
+            }
+
+            List<Node> allKeys = (from kvp in nextNode.ConnectedNodes select kvp.Key).Distinct().ToList();
+
+            Node minNode = (from min in allKeys orderby min.CurrentCost ascending select min).First();
+
+            NodePath.Add(minNode);
+
+            SetShortestPath(minNode);
+
         }
     }
 }
